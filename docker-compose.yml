@@ -1,0 +1,32 @@
+version: '3'
+services:
+  jenkins-container:
+    image: jenkins/jenkins:alpine
+    container_name: jenkins-container
+    ports:
+      - "8081:8080"
+      - "50001:50000"
+    volumes:
+      - ./jenkins/jenkins_home:/var/jenkins_home
+      - ./jenkins/jenkins_executors:/usr/share/jenkins/ref/
+    environment:
+      - JENKINS_OPTS="-Djava.util.logging.config.file=/var/jenkins_home/log.properties"
+      - JENKINS_SLAVE_AGENT_PORT=50000
+    networks:
+      - jenkins-network
+        
+  tomcat-container:
+    image: tomcat:latest
+    container_name: tomcat-container
+    ports:
+      - "8888:8080"
+    volumes:
+      - ./tomcat/webapps:/usr/local/tomcat/webapps
+    networks:
+      - tomcat-network
+
+networks:
+  jenkins-network:
+    driver: bridge
+  tomcat-network:
+    driver: bridge
