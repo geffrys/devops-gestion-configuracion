@@ -15,14 +15,14 @@ pipeline {
             steps {
                 echo 'Building..'
                 sh 'mvn clean package'
+                sh 'ls -l target'
             }
         }
         
         stage('Deploy') {
             steps {
                 echo 'Deploying..'
-                sh 'cp target/*.war ${TOMCAT_HOME}'
-                sh 'sudo systemctl restart tomcat8'
+                sh 'pwd'
             }
         }
     }
