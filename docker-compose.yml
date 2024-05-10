@@ -24,7 +24,17 @@ services:
       - ./tomcat/webapps:/usr/local/tomcat/webapps
     networks:
       - tomcat-network
-
+  mailhog:
+    image: mailhog/mailhog
+    container_name: mailhog
+    ports:
+      - "8025:8025"
+      - "1025:1025"
+    networks:
+      - jenkins-network
+    depends_on:
+      - jenkins-container
+    restart: always
 networks:
   jenkins-network:
     driver: bridge
