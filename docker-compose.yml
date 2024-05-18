@@ -1,7 +1,9 @@
 version: '3'
 services:
   jenkins-container:
-    image: jenkins/jenkins:alpine
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: jenkins-container
     ports:
       - "8081:8080"
